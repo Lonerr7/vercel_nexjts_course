@@ -53,8 +53,6 @@ export const updateInvoice = async (id: string, formData: FormData) => {
     status: formData.get('status'),
   });
 
-  console.log(`id: ${id}`);
-
   const amountInCents = amount * 1000;
 
   await sql`
@@ -65,4 +63,11 @@ export const updateInvoice = async (id: string, formData: FormData) => {
 
   revalidatePath('/dashboard/invoices');
   redirect('/dashboard/invoices');
+};
+
+// === Deleting an Invoice ===
+
+export const deleteInvoce = async (id: string) => {
+  await sql`DELETE FROM invoices WHERE id = ${id}`;
+  revalidatePath('/dashboard/invoices');
 };
