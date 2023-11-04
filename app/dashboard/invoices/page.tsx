@@ -14,7 +14,7 @@ interface Props {
   };
 }
 
-const Invoices: FC<Props> = async ({ searchParams }) => {
+const InvoicesPage: FC<Props> = async ({ searchParams }) => {
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
   const totalPages = await fetchInvoicesPages(query);
@@ -38,4 +38,4 @@ const Invoices: FC<Props> = async ({ searchParams }) => {
   );
 };
 
-export default Invoices;
+export default InvoicesPage;
