@@ -11,15 +11,15 @@ import {
 import { Button } from '@/app/ui/button';
 import { createInvoice } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
+import ErrorMessage from './error-message';
+
+const initialState = {
+  message: null,
+  errors: {},
+};
 
 export default function Form({ customers }: { customers: CustomerField[] }) {
-  const initialState = {
-    message: null,
-    errors: {},
-  };
   const [state, dispatch] = useFormState(createInvoice, initialState);
-
-  console.log(state);
 
   return (
     <form action={dispatch}>
@@ -49,15 +49,10 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
             <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
           </div>
           {state.errors?.customerId ? (
-            <div
-              className="mt-2 text-sm text-red-500"
-              id="customer-error"
-              aria-live="polite"
-            >
-              {state.errors.customerId.map((error) => (
-                <p key={error}>{error}</p>
-              ))}
-            </div>
+            <ErrorMessage
+              stateErrorField={state.errors.customerId}
+              idPrefix="customer"
+            />
           ) : null}
         </div>
 
@@ -81,15 +76,10 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
             </div>
           </div>
           {state.errors?.amount ? (
-            <div
-              className="mt-2 text-sm text-red-500"
-              id="amount-error"
-              aria-live="polite"
-            >
-              {state.errors.amount.map((err) => (
-                <p key={err}>{err}</p>
-              ))}
-            </div>
+            <ErrorMessage
+              stateErrorField={state.errors.amount}
+              idPrefix="amount"
+            />
           ) : null}
         </div>
 
@@ -135,20 +125,13 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
             </div>
           </div>
           {state.errors?.status ? (
-            <div
-              className="mt-2 text-sm text-red-500"
-              id="status-error"
-              aria-live="polite"
-            >
-              {state.errors.status.map((err) => (
-                <p className="mb-1" key={err}>
-                  {err}
-                </p>
-              ))}
-              {state?.message ? (
-                <p className="text-red-500">{state.message}</p>
-              ) : null}
-            </div>
+            <ErrorMessage
+              stateErrorField={state.errors.status}
+              idPrefix="status"
+            />
+          ) : null}
+          {state?.message ? (
+            <p className="mt-2 text-sm text-red-500">{state.message}</p>
           ) : null}
         </fieldset>
       </div>
