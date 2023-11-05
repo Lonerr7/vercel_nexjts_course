@@ -1,5 +1,10 @@
 import { FC, ReactNode } from 'react';
 import SideNav from '../ui/dashboard/sidenav';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Dashboard',
+};
 
 interface Props {
   children: ReactNode;
